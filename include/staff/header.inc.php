@@ -128,7 +128,7 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) {
                                         <!-- Menu Footer-->
                                         <li class="user-footer">
                                             <div class="pull-left">
-                                                <a href="<?php echo ROOT_PATH ?>scp/profile.php"><?php echo __('Profile'); ?>" class="btn btn-default btn-flat">Profile</a>
+                                                <a href="<?php echo ROOT_PATH ?>scp/profile.php" class="btn btn-default btn-flat">Profile</a>
                                             </div>
                                             <div class="pull-right">
                                                 <a href="<?php echo ROOT_PATH ?>scp/logout.php?auth=<?php echo $ost->getLinkToken(); ?>" class="btn btn-default btn-flat">Sign out</a>
