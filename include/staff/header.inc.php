@@ -106,8 +106,7 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) {
                                 <?php } else { ?>
                                     <li><a href="<?php echo ROOT_PATH ?>scp/index.php" class="no-pjax"><?php echo __('Agent Panel'); ?></a></li>
                                 <?php } ?>
-                                <li><a href="<?php echo ROOT_PATH ?>scp/profile.php"><?php echo __('Profile'); ?></a></li>
-                                <li><a href="<?php echo ROOT_PATH ?>scp/logout.php?auth=<?php echo $ost->getLinkToken(); ?>" class="no-pjax"><?php echo __('Log Out'); ?></a></li>
+                                
 
                                 <!-- User Account Menu -->
                                 <li class="dropdown user user-menu">
@@ -129,10 +128,10 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) {
                                         <!-- Menu Footer-->
                                         <li class="user-footer">
                                             <div class="pull-left">
-                                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                                <a href="<?php echo ROOT_PATH ?>scp/profile.php"><?php echo __('Profile'); ?>" class="btn btn-default btn-flat">Profile</a>
                                             </div>
                                             <div class="pull-right">
-                                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                                <a href="<?php echo ROOT_PATH ?>scp/logout.php?auth=<?php echo $ost->getLinkToken(); ?>" class="btn btn-default btn-flat">Sign out</a>
                                             </div>
                                         </li>
                                     </ul>
