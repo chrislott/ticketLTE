@@ -116,19 +116,19 @@ class StaffNav {
         if(!$this->tabs) {
             $this->tabs = array();
             $this->tabs['dashboard'] = array(
-                'desc'=>__('Dashboard'),'href'=>'dashboard.php','title'=>__('Agent Dashboard'), "class"=>"no-pjax"
+                'desc'=>__('Dashboard'),'href'=>'dashboard.php','iconclass'=>'fa fa-dashboard','title'=>__('Agent Dashboard'), "class"=>"no-pjax"
             );
             if ($thisstaff->hasPerm(User::PERM_DIRECTORY)) {
                 $this->tabs['users'] = array(
-                    'desc' => __('Users'), 'href' => 'users.php', 'title' => __('User Directory')
+                    'desc' => __('Users'), 'href' => 'users.php', 'iconclass'=>'fa fa-users', 'title' => __('User Directory')
                 );
             }
-            $this->tabs['tasks'] = array('desc'=>__('Tasks'), 'href'=>'tasks.php', 'title'=>__('Task Queue'));
-            $this->tabs['tickets'] = array('desc'=>__('Tickets'),'href'=>'tickets.php','title'=>__('Ticket Queue'));
+            $this->tabs['tasks'] = array('desc'=>__('Tasks'), 'href'=>'tasks.php','iconclass'=>'fa fa-tasks', 'title'=>__('Task Queue'));
+            $this->tabs['tickets'] = array('desc'=>__('Tickets'),'href'=>'tickets.php','iconclass'=>'fa fa-tags', 'title'=>__('Ticket Queue'));
 
-            $this->tabs['kbase'] = array('desc'=>__('Knowledgebase'),'href'=>'kb.php','title'=>__('Knowledgebase'));
+            $this->tabs['kbase'] = array('desc'=>__('Knowledgebase'),'href'=>'kb.php','iconclass'=>'fa fa-book','title'=>__('Knowledgebase'));
             if (count($this->getRegisteredApps()))
-                $this->tabs['apps']=array('desc'=>__('Applications'),'href'=>'apps.php','title'=>__('Applications'));
+                $this->tabs['apps']=array('desc'=>__('Applications'),'href'=>'apps.php','iconclass'=>'fa fa-cubes', 'title'=>__('Applications'));
         }
 
         return $this->tabs;
@@ -220,12 +220,12 @@ class AdminNav extends StaffNav{
 
             $tabs=array();
             $tabs['dashboard']=array('desc'=>__('Dashboard'),'href'=>'logs.php','title'=>__('Admin Dashboard'));
-            $tabs['settings']=array('desc'=>__('Settings'),'href'=>'settings.php','title'=>__('System Settings'));
-            $tabs['manage']=array('desc'=>__('Manage'),'href'=>'helptopics.php','title'=>__('Manage Options'));
-            $tabs['emails']=array('desc'=>__('Emails'),'href'=>'emails.php','title'=>__('Email Settings'));
-            $tabs['staff']=array('desc'=>__('Agents'),'href'=>'staff.php','title'=>__('Manage Agents'));
+            $tabs['settings']=array('desc'=>__('Settings'),'href'=>'settings.php','iconclass' => 'fa fa-gears','title'=>__('System Settings'));
+            $tabs['manage']=array('desc'=>__('Manage'),'href'=>'helptopics.php','iconclass' => 'fa fa-wrench','title'=>__('Manage Options'));
+            $tabs['emails']=array('desc'=>__('Emails'),'href'=>'emails.php','iconclass' => 'fa fa-envelope','title'=>__('Email Settings'));
+            $tabs['staff']=array('desc'=>__('Agents'),'href'=>'staff.php','iconclass' => 'group','title'=>__('Manage Agents'));
             if (count($this->getRegisteredApps()))
-                $tabs['apps']=array('desc'=>__('Applications'),'href'=>'apps.php','title'=>__('Applications'));
+                $tabs['apps']=array('desc'=>__('Applications'),'href'=>'apps.php','iconclass' => 'fa fa-cubes','title'=>__('Applications'));
             $this->tabs=$tabs;
         }
 
