@@ -5,7 +5,7 @@ if (($tabs = $nav->getTabs()) && is_array($tabs)) {
         if ($tab['href'][0] != '/') {
             $tab['href'] = ROOT_PATH . 'scp/' . $tab['href'];
             if (count($nav->getSubMenu($name)) > 0) {
-                echo sprintf('<li class="treeview %s"><a href="#"><span>%s</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>',$tab['active'] ? 'active' : '', $tab['desc']);
+                echo sprintf('<li class="treeview %s"><a href="#"><i class="%s"></i><span>%s</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>',$tab['active'] ? 'active' : '',$tab['iconclass'], $tab['desc']);
             } else {
                 echo sprintf('<li class="treeview"><a href="%s"><span>%s</span></a>', $tab['href'], $tab['desc']);
             }
