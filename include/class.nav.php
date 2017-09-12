@@ -219,11 +219,11 @@ class AdminNav extends StaffNav{
         if(!$this->tabs){
 
             $tabs=array();
-            $tabs['dashboard']=array('desc'=>__('Dashboard'),'href'=>'logs.php','title'=>__('Admin Dashboard'));
+            $tabs['dashboard']=array('desc'=>__('Dashboard'),'href'=>'logs.php','iconclass' => 'fa fa-dashboard','title'=>__('Admin Dashboard'));
             $tabs['settings']=array('desc'=>__('Settings'),'href'=>'settings.php','iconclass' => 'fa fa-gears','title'=>__('System Settings'));
             $tabs['manage']=array('desc'=>__('Manage'),'href'=>'helptopics.php','iconclass' => 'fa fa-wrench','title'=>__('Manage Options'));
             $tabs['emails']=array('desc'=>__('Emails'),'href'=>'emails.php','iconclass' => 'fa fa-envelope','title'=>__('Email Settings'));
-            $tabs['staff']=array('desc'=>__('Agents'),'href'=>'staff.php','iconclass' => 'group','title'=>__('Manage Agents'));
+            $tabs['staff']=array('desc'=>__('Agents'),'href'=>'staff.php','iconclass' => 'fa fa-group','title'=>__('Manage Agents'));
             if (count($this->getRegisteredApps()))
                 $tabs['apps']=array('desc'=>__('Applications'),'href'=>'apps.php','iconclass' => 'fa fa-cubes','title'=>__('Applications'));
             $this->tabs=$tabs;
