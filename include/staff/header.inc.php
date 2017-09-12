@@ -73,7 +73,8 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) {
         </head>
         <body class="skin-blue sidebar-mini">
             <div class="wrapper" style="height: auto; min-height: 100%;">
-                <?php
+                
+              <?php
                 if ($ost->getError()) {
                     echo sprintf('<div id="error_bar">%s</div>', $ost->getError());
                 } elseif ($ost->getWarning()) {
@@ -87,7 +88,7 @@ if (!isset($_SERVER['HTTP_X_PJAX'])) {
                     <!-- Logo -->
                     <a href="<?php echo ROOT_PATH ?>scp/index.php" class="logo">
                         <!-- mini logo for sidebar mini 50x50 pixels -->
-                        <span class="logo-mini"><b>A</b>LT</span>
+                        <span class="logo-mini"><b>SCP</b></span>
                         <!-- logo for regular state and mobile devices -->
                         <span class="logo-lg"><img src="<?php echo ROOT_PATH ?>scp/logo.php?<?php echo strtotime($cfg->lastModified('staff_logo_id')); ?>" alt="osTicket &mdash; <?php echo __('Customer Support System'); ?>" width="130px"/></span>
                     </a>
