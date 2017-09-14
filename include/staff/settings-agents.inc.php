@@ -11,17 +11,20 @@ if (!defined('OSTADMININC') || !$thisstaff || !$thisstaff->isAdmin() || !$config
     <input type="hidden" name="t" value="agents" >
     <section class="content">
         <div class="row">
-            <div class="col-xs-12 col-lg-6">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><?php echo __('General Settings'); ?></h3>
-                    </div>
-                    <div class="box-body">
-                        <tr>
-                            <td width="180"><?php echo __('Name Formatting'); ?>:</td>
-                            <td>
-                                <select name="agent_name_format">
-                                    <?php
+		<!-- General Settings Box --> 
+	    <div class="col-xs-12 col-lg-6">
+            <div class="box">
+                <div class="box-header with-border">
+                     <h3 class="box-title"><?php echo __('General Settings'); ?></h3>
+                </div>
+                <div class="box-body">
+				<div class="form-group">                        
+					<label for="agent_name_format" class="col-sm-4 control-label"><?php echo __('Name Formatting'); ?></label>                 
+					<div class="col-sm-6">                   
+                	<div class="input-group">       
+						      <select name="agent_name_format">
+                 	<?php
+								
                                     foreach (PersonsName::allFormats() as $n => $f) {
                                         list($desc, $func) = $f;
                                         $selected = ($config['agent_name_format'] == $n) ? 'selected="selected"' : '';
@@ -29,23 +32,28 @@ if (!defined('OSTADMININC') || !$thisstaff || !$thisstaff->isAdmin() || !$config
                                         <option value="<?php echo $n; ?>" <?php echo $selected;
                                         ?>><?php echo __($desc); ?></option>
                                             <?php } ?>
-                                </select>
-                                <i class="help-tip icon-question-sign" href="#agent_name_format"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo __('Agent Identity Masking'); ?>:</td>
-                            <td>
+                               </select>
+							<span class="input-group-addon"><i class="help-tip fa fa-question-circle" href="#agent_name_format"></i></span>
+                          </div>
+					</div>
+				</div>               
+				<div class="form-group">                        
+		<label for="hide_staff_name" class="col-sm-4 control-label"><?php echo __('Agent Identity Masking'); ?>:</label>                 
+        	<div class="col-sm-6">                   
+                	<div class="input-group">                           
                                 <input type="checkbox" name="hide_staff_name" <?php echo $config['hide_staff_name'] ? 'checked="checked"' : ''; ?>>
-                                <?php echo __("Hide agent's name on responses."); ?>
-                                <i class="help-tip icon-question-sign" href="#staff_identity_masking"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="180"><?php echo __('Avatar Source'); ?>:</td>
-                            <td>
+                                 <?php echo __("Hide agent's name on responses."); ?>
+				<span class="input-group-addon"><i class="help-tip fa fa-question-circle" href="#staff_identity_masking"></i></span>
+                           </div>
+		</div>
+	    </div>                            
+				<div class="form-group"> 
+				
+		<label for="agent_avatar" class="col-sm-4 control-label"><?php echo __('Avatar Source'); ?>:</label>                 
+        	<div class="col-sm-6">                             
+			<div class="input-group">   
                                 <select name="agent_avatar">
-                                    <?php
+                                  <?php
                                     require_once INCLUDE_DIR . 'class.avatar.php';
                                     foreach (AvatarSource::allSources() as $id => $class) {
                                         $modes = $class::getModes();
@@ -62,91 +70,104 @@ if (!defined('OSTADMININC') || !$thisstaff || !$thisstaff->isAdmin() || !$config
                                             echo "<option {$selected} value=\"{$id}\">{$class::getName()}</option>";
                                         }
                                     }
-                                    ?>
-                                </select>
+                                    ?>                              
+				</select>
                                 <div class="error"><?php echo Format::htmlchars($errors['agent_avatar']); ?></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="2">
-                                <em><b><?php echo __('Authentication Settings'); ?></b></em>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td><?php echo __('Password Expiration Policy'); ?>:</td>
-                            <td>
-                                <select name="passwd_reset_period">
-                                    <option value="0"> &mdash; <?php echo __('No expiration'); ?> &mdash;</option>
-                                    <?php
-                                    for ($i = 1; $i <= 12; $i++) {
-                                        echo sprintf('<option value="%d" %s>%s</option>', $i, (($config['passwd_reset_period'] == $i) ? 'selected="selected"' : ''), sprintf(_N('Monthly', 'Every %d months', $i), $i));
-                                    }
-                                    ?>
-                                </select>
-                                <font class="error"><?php echo $errors['passwd_reset_period']; ?></font>
-                                <i class="help-tip icon-question-sign" href="#password_expiration_policy"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo __('Allow Password Resets'); ?>:</td>
-                            <td>
-                                <input type="checkbox" name="allow_pw_reset" <?php echo $config['allow_pw_reset'] ? 'checked="checked"' : ''; ?>>
-                                &nbsp;<i class="help-tip icon-question-sign" href="#allow_password_resets"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo __('Reset Token Expiration'); ?>:</td>
-                            <td>
-                                <input type="text" name="pw_reset_window" size="6" value="<?php echo $config['pw_reset_window']; ?>">
-                                <em><?php echo __('minutes'); ?></em>
-                                <i class="help-tip icon-question-sign" href="#reset_token_expiration"></i>
-                                &nbsp;<font class="error"><?php echo $errors['pw_reset_window']; ?></font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo __('Agent Excessive Logins'); ?>:</td>
-                            <td>
-                                <select name="staff_max_logins">
-                                    <?php
-                                    for ($i = 1; $i <= 10; $i++) {
-                                        echo sprintf('<option value="%d" %s>%d</option>', $i, (($config['staff_max_logins'] == $i) ? 'selected="selected"' : ''), $i);
-                                    }
-                                    ?>
-                                </select> <?php
-                                echo __(
-                                        'failed login attempt(s) allowed before a lock-out is enforced');
-                                ?>
-                                <br/>
-                                <select name="staff_login_timeout">
+			</div>
+                </div>           
+            </div>          
+				</div> <!-- Box Body -->
+			</div><!-- Box -->
+		 </div><!-- col-xs-12 col-lg-6 -->
+		
+		<!-- Authentication Settings Box --> 
+        <div class="col-xs-12 col-lg-6">
+		
+		
+		<div class="box">
+			<div class="box-header with-border">
+                    	<h3 class="box-title"><?php echo __('Authentication Settings'); ?></h3>
+            </div>
+			<div class="box-body">
+				<div class="form-group">                        
+						<label for="passwd_reset_period" class="col-sm-4 control-label"><?php echo __('Password Expiration Policy'); ?>:</label>                 
+        					<div class="col-sm-6">
+							   <select name="passwd_reset_period">
+                                    				  <option value="0"> &mdash; <?php echo __('No expiration'); ?> &mdash;</option>
+                                       				<?php
+                                    					for ($i = 1; $i <= 12; $i++) {
+                                        				echo sprintf('<option value="%d" %s>%s</option>', $i, (($config['passwd_reset_period'] == $i) ? 'selected="selected"' : ''), sprintf(_N('Monthly', 'Every %d months', $i), $i));
+                                    					}
+                                    				?>                              
+							  </select>
+                                			<font class="error"><?php echo $errors['passwd_reset_period']; ?></font>
+							<span class="input-group-addon"><i class="help-tip fa fa-question-circle" href="#password_expiration_policy"></i></span>
+							
+						</div> 
+				</div>
+				<div class="form-group">                        
+						<label for="allow_pw_reset" class="col-sm-4 control-label"><?php echo __('Allow Password Resets'); ?>:</label>                 
+        					<div class="col-sm-6">
+							   <input type="checkbox" name="allow_pw_reset" checked="checked" <?php echo $config['allow_pw_reset'] ? 'checked="checked"' : ''; ?>>
+                               
+							<span class="input-group-addon"><i class="help-tip fa fa-question-circle" href="#allow_password_resets"></i></span>
+							
+						</div> 
+				</div>
+				<div class="form-group">                        
+						<label for="pw_reset_window" class="col-sm-4 control-label"><?php echo __('Reset Token Expiration'); ?>:</label>                 
+        					<div class="col-sm-6">
+							    <input type="text" name="pw_reset_window" size="6" value="<?php echo $config['pw_reset_window']; ?>"><em><?php echo __('minutes'); ?></em>
+                                			<font class="error"><?php echo $errors['pw_reset_window']; ?></font>
+							<span class="input-group-addon"><i class="help-tip fa fa-question-circle" href="#reset_token_expiration"></i></span>
+							
+						</div> 
+				</div>
+				<div class="form-group">                        
+					<label for="staff_max_logins" class="col-sm-4 control-label"><?php echo __('Agent Excessive Logins'); ?>:</label>                 
+        				<div class="col-sm-6">
+							<select name="staff_max_logins">
+										<?php
+                                    		for ($i = 1; $i <= 10; $i++) {
+                                        	echo sprintf('<option value="%d" %s>%d</option>', $i, (($config['staff_max_logins'] == $i) ? 'selected="selected"' : ''), $i);
+											}
+                                    	?>
+							</select>  <?php echo __('failed login attempt(s) allowed before a lock-out is enforced'); ?>
+							<br>
+                             <select name="staff_login_timeout">
                                     <?php
                                     for ($i = 1; $i <= 10; $i++) {
                                         echo sprintf('<option value="%d" %s>%d</option>', $i, (($config['staff_login_timeout'] == $i) ? 'selected="selected"' : ''), $i);
                                     }
-                                    ?>
-                                </select> <?php echo __('minutes locked out'); ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo __('Agent Session Timeout'); ?>:</td>
-                            <td>
-                                <input type="text" name="staff_session_timeout" size=6 value="<?php echo $config['staff_session_timeout']; ?>">
-                                <?php echo __('minutes'); ?> <em><?php echo __('(0 to disable)'); ?></em>. <i class="help-tip icon-question-sign" href="#staff_session_timeout"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo __('Bind Agent Session to IP'); ?>:</td>
-                            <td>
-                                <input type="checkbox" name="staff_ip_binding" <?php echo $config['staff_ip_binding'] ? 'checked="checked"' : ''; ?>>
-                                <i class="help-tip icon-question-sign" href="#bind_staff_session_to_ip"></i>
-                            </td>
-                        </tr>
-                        </tbody>
-                        </table>
-                    </div> <!-- /box-body -->
-                </div> <!-- /box -->
-            </div> <!-- /col-xs-12 col-lg-6 -->
+                                    ?>                              
+							</select><?php echo __('minutes locked out'); ?>      
 
-            <div class="col-xs-12 col-lg-6">
+						</div> 
+				</div>
+				<div class="form-group">                        
+					<label for="staff_session_timeout" class="col-sm-4 control-label"><?php echo __('Agent Session Timeout'); ?>:</label>                 
+        				<div class="col-sm-6">
+							 <input type="text" name="staff_session_timeout" size="6" value="<?php echo $config['staff_session_timeout']; ?>"> <?php echo __('minutes'); ?><em><?php echo __('(0 to disable)'); ?></em>. 
+							<span class="input-group-addon"><i class="help-tip fa fa-question-circle" href="#staff_session_timeout"></i></span>
+						</div> 
+				</div>
+				<div class="form-group">                        
+						<label for="staff_ip_binding" class="col-sm-4 control-label"><?php echo __('Bind Agent Session to IP'); ?>:</label>                 
+        					<div class="col-sm-6">
+							 <input type="checkbox" name="staff_ip_binding"<?php echo $config['staff_ip_binding'] ? 'checked="checked"' : ''; ?>>
+							<span class="input-group-addon"><i class="help-tip fa fa-question-circle" href="#bind_staff_session_to_ip"></i></span>
+							
+						</div> 
+				</div>
+			</div> <!-- Box Body -->
+		</div> <!-- Box -->
+        </div> <!-- "col-xs-12 col-lg-6" -->         
+
+		</div> <!-- row -->
+		<div class="row">
+        <div class="col-xs-12 col-lg-6">
+		
+		
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title"><?php echo __('Authentication and Registration Templates &amp; Pages'); ?></h3>
@@ -197,8 +218,8 @@ if (!defined('OSTADMININC') || !$thisstaff || !$thisstaff->isAdmin() || !$config
                     </div> <!-- /box-body -->
                 </div> <!-- /box -->
             </div>
-        </div> <!-- /row -->
 
+        </div><!-- Row -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
